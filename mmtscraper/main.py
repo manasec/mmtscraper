@@ -28,18 +28,13 @@ for category in categories:
     for link in offer_links:
         
         response = scraper.open_offer_link(link)
-        #if response.status_code
         offer_table = scraper.extract_table(response)
         print("converting html to table")
         table_list = Table2xlsx.html_table_converter(offer_table)
         print("populating {} in {} file with *{}* offer coupons...".format(sheetname+str(sheetcount),workbook,len(table_list)-1))
         Table2xlsx.table_to_xlsx(workbook, sheetname+str(sheetcount), table_list)
 
-    
 
-
-     
-        #break
     sheetcount += 1
     print("\ndone with {} , now quitting driver..".format(category))
     sleep(2)
