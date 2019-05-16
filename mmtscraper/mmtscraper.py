@@ -37,9 +37,17 @@ class MmtScraper(object):
         return all_link_elements
     #requesting a offer page   
     def open_offer_link(self,link):
-        response = requests.get(link)
-
-        #exception handling here
+        try:
+            response = requests.get(link,timeout=3)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as errh:
+            print ("Http Error:",errh)
+        except requests.exceptions.ConnectionError as errc:
+             print ("Error Connecting:",errc)
+        except requests.exceptions.Timeout as errt:
+            print ("Timeout Error:",errt)
+        except requests.exceptions.RequestException as err:
+            print ("OOps: Something Else",err)
 
         return response
     #extracting tagobjects with class = tblOffer

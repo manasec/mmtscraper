@@ -24,7 +24,7 @@ for category in categories:
     offer_links = scraper.extract_offer_links()
     
     
-    print("extracting offer details for all offers on ",categories[sheetcount])
+    print("extracting offer details for all offers on ",categories[sheetcount-1])
     for link in offer_links:
         
         response = scraper.open_offer_link(link)
