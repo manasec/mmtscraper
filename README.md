@@ -45,6 +45,7 @@ python main.py
 ### Important notes:
 * flush/clear all the data of data.xlsx file everytime before running the package to avoid redundancy, this can be automated with a small code snippet but i will update it later
 * Firefox driver or IE can be used in place of chromedriver as per your preference
+* Make sure to use the same data.xlsx file, and if want to change the file then create sheets manually in that workbook before running the package
 * use rotating proxies and different user-agents to avoid getting blocked
 * **I'm not responsible for any action/ban by makemytrip on anyone for scraping their website, use this tool at your own risk.**
   
