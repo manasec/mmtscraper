@@ -59,8 +59,8 @@ class MmtScraper(object):
 
    
         
-    #to end the session(quitting the browser)
+    #to end the session(quitting the browser) and the driver
     def quit(self):
-        self.driver.close()
+        self.driver.quit()
 
 
