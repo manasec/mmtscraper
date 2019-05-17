@@ -2,7 +2,7 @@
 This repo contains different site scrapers/crawlers 
 
 ## mmtscraper
-  This Project is a offer scraper for makemytrip.com
+  This Project is a offers scraper for makemytrip.com. This will scrape all the offers currently available at MakeMyTrip and store them into a workbook with **one sheet for every offer category**
 ### Packages used
 * **Selenium**
 > _Selenium automates browsers. That's it! What you do with that power is entirely up to you. 
@@ -46,6 +46,7 @@ python main.py
 * flush/clear all the data of data.xlsx file everytime before running the package to avoid redundancy, this can be automated with a small code snippet but i will update it later
 * Firefox driver or IE can be used in place of chromedriver as per your preference
 * Make sure to use the same data.xlsx file, and if want to change the file then create sheets manually in that workbook before running the package
+* The offer directories and the html structure of the website may change in future, this repo will get updated accordingly.
 * use rotating proxies and different user-agents to avoid getting blocked
 * **I'm not responsible for any action/ban by makemytrip on anyone for scraping their website, use this tool at your own risk.**
   
