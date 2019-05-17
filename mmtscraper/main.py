@@ -7,8 +7,8 @@ categories = ['daily-deals',
             'daily-deals/flights',
               'daily-deals/hotels-coupon-offers',
             'daily-deals/holidays-coupon-offers',
-              'cabs-coupon-offers',
-              'bus-coupon-offers']
+              'daily-deals/cabs-coupon-offers',
+              'daily-deals/bus-coupon-offers']
 #categories - all the potential offer dirs for mmt offer url's  
 sheetcount = 1                                   
 workbook = "data.xlsx"
