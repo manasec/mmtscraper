@@ -1,4 +1,4 @@
-# Circles_Scrapers
+# Scrapers
 This repo contains different site scrapers/crawlers 
 
 ## mmtscraper
