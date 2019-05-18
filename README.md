@@ -32,7 +32,7 @@ This repo contains different site scrapers/crawlers
 ### Usage
   first of all clone this repo with:
 ```
-git clone https://github.com/manasec/circles-scrapers.git
+git clone https://github.com/manasec/Scrapers.git
 ```
   then install required dependencies and libraries using:
 ```
