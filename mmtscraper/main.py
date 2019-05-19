@@ -1,41 +1,42 @@
 from mmtscraper import MmtScraper
 from Table2xlsx import Table2xlsx
 from time import sleep
-url = 'https://www.makemytrip.com/'
-categories = ['daily-deals',
-              'daily-deals/bank',
-            'daily-deals/flights',
-              'daily-deals/hotels-coupon-offers',
-            'daily-deals/holidays-coupon-offers',
-              'daily-deals/cabs-coupon-offers',
-              'daily-deals/bus-coupon-offers']
-#categories - all the potential offer dirs for mmt offer url's  
-sheetcount = 1                                   
+
+url = 'https://www.makemytrip.com/daily-deals'
+#categories - all the potential offer are in this dir for mmt offer url's                                   
 workbook = "data.xlsx"
-sheetname = "Sheet"
+sheetname = "Sheet1"
+
 
 print("starting mmtscraper...")
+print("\ncurrent target - ",url)
+scraper = MmtScraper(url)
+print("loading url, getting offer links!..")
+scraper.load_mmt_url()
+offer_links = scraper.extract_offer_links()
+print("extracting offer details for all offers on ", url)
 
-for category in categories:
-    print("\ncurrent target category - ",categories[sheetcount-1])
-    scraper = MmtScraper(url, category)
-    print("loading url, getting offer links!..")
-    scraper.load_mmt_url()
-    offer_links = scraper.extract_offer_links()
-    
-    
-    print("extracting offer details for all offers on ",categories[sheetcount-1])
-    for link in offer_links:
+for link in offer_links:
         
-        response = scraper.open_offer_link(link)
-        offer_table = scraper.extract_table(response)
-        print("converting html to table")
-        table_list = Table2xlsx.html_table_converter(offer_table)
-        print("populating {} in {} file with *{}* offer coupons...".format(sheetname+str(sheetcount),workbook,len(table_list)-1))
-        Table2xlsx.table_to_xlsx(workbook, sheetname+str(sheetcount), table_list)
+    response = scraper.open_offer_link(link)
+        
+    offer_table = scraper.extract_table(response)
+    print("converting html to table")
+    table_list = Table2xlsx.html_table_converter(offer_table)
+    print("getting category of the offer..")
+    category_detail = scraper.get_category(response)
+    print("getting other details about the offer..")
+    list_text = scraper.get_list_text(response)
+    table_list = Table2xlsx.fill_missing(category_detail, list_text, link, table_list)             #for adding missing values
+    print("populating {} in {} file with *{}* offer coupons...".format(sheetname,workbook,len(table_list)-1))
+    Table2xlsx.table_to_xlsx(workbook, sheetname, table_list)
 
 
-    sheetcount += 1
-    print("\ndone with {} , now quitting driver..".format(category))
-    sleep(2)
-    scraper.quit()
+
+print("\ndone with scraping , now quitting driver..")
+sleep(2)
+scraper.quit()
+    
+
+
+
