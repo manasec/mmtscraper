@@ -7,10 +7,9 @@ import bs4
 import requests
 
 class MmtScraper(object):
-    def __init__(self, url, category):
+    def __init__(self, url):
 
-        self.url = url+category
-        self.category = category
+        self.url = url
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--ignore-certificate-errors')
         self.options.add_argument('--incognito')
@@ -27,7 +26,7 @@ class MmtScraper(object):
             wait.until(EC.presence_of_element_located((By.CLASS_NAME, "deal-view-details")))
             print("Page is ready")
         except TimeoutException:
-            print("Loading took too much time! seems like no offers on {} page".format(self.category))
+            print("Loading took too much time! seems like no offers")
     #getting offer links of each offer listed on current offer category page
     def extract_offer_links(self):
         all_link_elements = self.driver.find_elements_by_class_name("deal-view-details")
@@ -57,8 +56,19 @@ class MmtScraper(object):
         offer_table = soup.select('.tblOffer')[0]
         return offer_table
 
-   
-        
+    def get_category(self,response):
+
+        soup = bs4.BeautifulSoup(response.text,'lxml')
+        category = soup.select(".bannerInnerContent")[0]
+        return category.text
+
+    def get_list_text(self, response):
+        soup = bs4.BeautifulSoup(response.text, 'lxml')
+        listing = soup.select(".listing")
+        text = ""
+        for alist in listing:
+            text = text + alist.text
+        return text
     #to end the session(quitting the browser) and the driver
     def quit(self):
         self.driver.quit()
