@@ -2,6 +2,7 @@ import openpyxl
 from html_table_extractor.extractor import Extractor
 from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
+import re
 
 class Table2xlsx(object):
     #to convert html-table to list-table
@@ -41,3 +42,52 @@ class Table2xlsx(object):
              adjusted_width = max_length + 2
              sheet.column_dimensions[get_column_letter(column)].width = adjusted_width       
         wb.save(workbook)
+
+    @classmethod
+    def fill_missing(self, category_detail, list_text, link, table_list):
+        #regex area
+        catreg = re.compile(r"\w*\sHotels|\w*\sFlights")
+        valreg = re.compile(r"valid.*\d+")
+        conreg = re.compile(r"\s\d\s.+|once.+")
+        #regex area
+
+        if "Category" not in table_list[0]:
+            table_list[0].insert(1,"Category")            
+            category_head = catreg.search(category_detail)
+            if category_head:
+                category_head = category_head.group(0)
+            else:
+                category_head = "Uncategorized"
+            for index in range(1,len(table_list)):
+                table_list[index].insert(1,category_head)
+
+        table_list[0].insert(0,"Platform")
+        for index in range(1,len(table_list)):
+            table_list[index].insert(0,"MakeMyTrip")
+            
+        if "Validity" not in table_list[0]:
+            table_list[0].append("Validity") 
+            validity = valreg.search(list_text)
+            if validity:
+                validity = validity.group(0)
+            else:
+                validity = "N/A"
+            for index in range(1,len(table_list)):
+                table_list[index].append(validity)
+
+        table_list[0].append("Constraints")
+        constraints = conreg.findall(list_text)
+        constraint = ""
+        if constraints:
+            for con in constraints:
+                constraint += con + "," 
+        else:
+            constraint = "N/A"
+        for index in range(1,len(table_list)):
+            table_list[index].append(constraint)
+            
+        table_list[0].append("Offer Link")
+        for index in range(1,len(table_list)):
+            table_list[index].append(link)
+
+        return table_list
