@@ -48,7 +48,7 @@ class Table2xlsx(object):
         #regex area
         catreg = re.compile(r"\w*\sHotels|\w*\sFlights")
         valreg = re.compile(r"valid.*\d+")
-        conreg = re.compile(r"\s\d\s.+|once.+")
+        conreg = re.compile(r"\s\d\sbooking.+|once.+")
         #regex area
 
         if "Category" not in table_list[0]:
