@@ -5,7 +5,7 @@ from openpyxl.utils import get_column_letter
 import re
 
 class Table2xlsx(object):
-    #to convert html-table to list-table
+    
     @classmethod
     def html_table_converter(self, offer_table):
 
@@ -13,7 +13,7 @@ class Table2xlsx(object):
         extractor.parse()
         table_list = extractor.return_list()
         return table_list
-    #to convert a list-table to xlsx file with all the required filters and adjustments
+    
     @classmethod
     def table_to_xlsx(self, workbook, sheetname, table_list):
         wb = openpyxl.load_workbook(workbook)
@@ -28,13 +28,13 @@ class Table2xlsx(object):
                 sheet.cell(row=next_row+i, column=j+1).value = table_list[i][j]
                 if i==0:
                     sheet.cell(row=next_row+i, column=j+1).font = fontObj1
-        #for adjusting column width
+        
         for col in sheet.columns:
              max_length = 0
              column = col[0].column
-             # Get the column name
+             
              for cell in col:
-                 try: # Necessary to avoid error on empty cells
+                 try: 
                      if len(str(cell.value)) > max_length:
                          max_length = len(cell.value)
                  except:
@@ -46,11 +46,22 @@ class Table2xlsx(object):
     @classmethod
     def fill_missing(self, category_detail, list_text, link, table_list):
         #regex area
-        catreg = re.compile(r"\w*\sHotels|\w*\sFlights")
+        catreg = re.compile(r"\w*\sHotels|\w*\sFlights|\w*\sCabs")
         valreg = re.compile(r"valid.*\d+")
         conreg = re.compile(r"\s\d\sbooking.+|once.+")
         #regex area
-
+        
+        standard = ["Platform","Coupon Code","Category","Offer Details",
+                    "Minimum Booking Amount (INR)","Booking Channel",
+                    "Applicable Banks","Validity","Constraints","Offer Link"]
+        for head in range(len(table_list[0])):
+            index =[]
+            if table_list[0][head] not in standard:
+                index.append(head)
+        for i in index:
+            table_list[0].pop(i)
+            for li in range(1,len(table_list)):
+                table_list[li].pop(i)
         if "Category" not in table_list[0]:
             table_list[0].insert(1,"Category")            
             category_head = catreg.search(category_detail)
@@ -87,6 +98,7 @@ class Table2xlsx(object):
             table_list[index].append(constraint)
             
         table_list[0].append("Offer Link")
+        link = '=HYPERLINK("{}", "{}")'.format(link, "Link")
         for index in range(1,len(table_list)):
             table_list[index].append(link)
 
