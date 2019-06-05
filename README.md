@@ -29,7 +29,7 @@
 ### Usage
   first of all clone this repo with:
 ```
-git clone https://github.com/manasec/Scrapers.git
+git clone https://github.com/manasec/mmtscraper.git
 ```
   then install required dependencies and libraries using:
 ```
