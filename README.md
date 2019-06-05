@@ -35,7 +35,7 @@ git clone https://github.com/manasec/mmtscraper.git
 ```
 pip install -r requirements.txt
 ```
-  And finally run the driver program from circles-scrapers/mmtscraper/ directory:
+  And finally run the driver program from mmtscraper/ directory:
 ```
 python main.py
 ```
