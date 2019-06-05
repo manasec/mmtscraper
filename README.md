@@ -1,7 +1,4 @@
-# Scrapers
-This repo contains different site scrapers/crawlers 
-
-## mmtscraper
+# Mmtscraper
   This Project is a offers scraper for makemytrip.com. This will scrape all the offers currently available at MakeMyTrip and store them into a workbook.
 ### Packages used
 * **Selenium**
