@@ -42,7 +42,7 @@ python main.py
 ### Important notes:
 * flush/clear all the data of data.xlsx file everytime before running the package to avoid redundancy, this can be automated with a small code snippet but i will update it later
 * Firefox driver or IE can be used in place of chromedriver as per your preference
-* The offer directories and the html structure of the website may change in future, this repo will get updated accordingly.
+* The offer directories and the html structure of the website may change in future.
 * The regex's used are not strict but does the work for now.
 * use rotating proxies and different user-agents to avoid getting blocked
 * **I'm not responsible for any action/ban by makemytrip on anyone for scraping their website, use this tool at your own risk.**
